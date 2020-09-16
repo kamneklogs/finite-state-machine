@@ -26,7 +26,7 @@ public class Main extends Application {
 
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Finite State Machine");
+		primaryStage.setTitle("Finite State Machine Analizer");
 		primaryStage.show();
 	}
 }
