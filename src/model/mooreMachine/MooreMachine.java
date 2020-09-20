@@ -1,9 +1,15 @@
 package model.mooreMachine;
 
-public class MooreMachine<O, I> {
+import model.Machine;
 
-    private String machineName;
-    private MooreState<O, I> initialState;
+public class MooreMachine<O, I> extends Machine{
+
+    public MooreMachine(String name) {
+        super(name);
+    }
+
+
+    
 
 
   
