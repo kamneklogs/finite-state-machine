@@ -4,10 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="83.0" layoutY="74.0" text="Escoja el tipo de FSM a analizarr:" />
+      <Label layoutX="83.0" layoutY="74.0" text="Escoja el tipo de FSM a analizar:" />
       <Button layoutX="191.0" layoutY="251.0" mnemonicParsing="false" onAction="#mealyopt" text="Máquina de Mealy" />
       <Button layoutX="434.0" layoutY="251.0" mnemonicParsing="false" onAction="#mooreopt" text="Máquina de Moore" />
    </children>
