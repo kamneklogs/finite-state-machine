@@ -1,17 +1,13 @@
 package model.mooreMachine;
 
-import model.Machine;
-
-public class MooreState<O, I> extends Machine{
+public class MooreState<O, I> {
 
     private String name;
     private O output;
     private MooreTransition<I> myTransition;
 
-    public MooreState(String name, Object[] inputAlphabet, Object[] outputAlphabet, String name2, O output,
-            MooreTransition<I> myTransition) {
-        super(name, inputAlphabet, outputAlphabet);
-        name = name2;
+    public MooreState(String name, O output, MooreTransition<I> myTransition) {
+        this.name = name;
         this.output = output;
         this.myTransition = myTransition;
     }
@@ -40,5 +36,4 @@ public class MooreState<O, I> extends Machine{
         this.myTransition = myTransition;
     }
 
-   
 }
