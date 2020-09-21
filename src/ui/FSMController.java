@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -18,6 +17,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.GenericArray;
+import model.Analyzers.Analyzer;
+import model.Analyzers.MealyAnalyzer;
 import model.*;
 import model.mealyMachine.MealyMachine;
 import model.mealyMachine.MealyState;
@@ -162,6 +163,8 @@ public class FSMController {
 	public int counterSymbols;
 	public int counterStates;
 
+	private Analyzer mealyAnalizer, mooreAnalyzer;
+
 	@FXML
 	void link(ActionEvent event) throws IOException {
 
@@ -177,6 +180,7 @@ public class FSMController {
 		}
 		if (counterStates + 1 == mealyS.length && counterSymbols + 1 == symbolsInput.length) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
+
 			alert.setTitle("Confirmacion");
 			alert.setHeaderText("Enlazamiento completado");
 			alert.setContentText(
@@ -195,6 +199,7 @@ public class FSMController {
 
 			a = new MealyMachine<>(mealyS.get(0), "Mealy Machine", myInputAlphabet, myOutputAlphabet);
 
+			mealyAnalizer = new MealyAnalyzer((MealyMachine<String, String>) a);
 			loadAnalyzerWindow();
 		} else {
 
