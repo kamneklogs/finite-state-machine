@@ -1,2 +1,5 @@
 /lib
 /.vscode
+/bin/
+.classpath
+.project
