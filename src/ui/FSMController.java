@@ -163,7 +163,9 @@ public class FSMController {
 	public int counterSymbols;
 	public int counterStates;
 
-	private Analyzer mealyAnalizer, mooreAnalyzer;
+	private MealyAnalyzer mealyAnalizer, mooreAnalyzer;
+
+	private String accessibleStatesOfTheMyMealyMachine;
 
 	@FXML
 	void link(ActionEvent event) throws IOException {
@@ -200,12 +202,26 @@ public class FSMController {
 			for (int i = 0; i < symbolsOutput.length; i++) {
 				myOutputAlphabet.set(i, symbolsOutput[i]);
 			}
-
+			String eA = mealyS.get(0).setAccessible();
 			a = new MealyMachine<>(mealyS.get(0), "Mealy Machine", myInputAlphabet, myOutputAlphabet);
 
+			/*
+			 * for (int i = 0; i < mealyS.length; i++) {
+			 * System.out.println(mealyS.get(i).getName() + " es accesible? " +
+			 * mealyS.get(i).isAccessible()); }
+			 */
+
+			 System.out.println(eA);
+
+			mealyS = null;
+
 			mealyAnalizer = new MealyAnalyzer(a, mealyS);
-			mealyAnalizer.clearInaccessibleStates();
+			// mealyAnalizer.clearInaccessibleStates();
+
 			loadAnalyzerWindow();
+
+			resultado.setText("\n" + eA);
+
 		} else {
 
 			mealyS.get(counterStates).link(mealyS.get(Integer.parseInt(indexDestinyState.getText())),
@@ -229,6 +245,9 @@ public class FSMController {
 		}
 
 	}
+	@FXML
+    private Label resultado;
+
 
 	public void loadAnalyzerWindow() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Analyzer.fxml"));

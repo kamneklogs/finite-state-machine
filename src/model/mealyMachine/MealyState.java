@@ -7,22 +7,40 @@ public class MealyState<I, O> {
     private GenericArray<MealyTransition<I, O>> myTransitions;
     private int index;
     private boolean isAccessible;
+    private String eA;
+
     public MealyState(String name, int alphLength) {
         this.name = name;
         myTransitions = new GenericArray<>(alphLength);
         index = 0;
-        isAccessible=false;
+        isAccessible = false;
+        eA = "";
     }
 
     public boolean isAccessible() {
-		return isAccessible;
-	}
+        return isAccessible;
+    }
 
-	public void setAccessible(boolean isAccessible) {
-		this.isAccessible = isAccessible;
-	}
+    public String setAccessible() {
 
-	public String getName() {
+        isAccessible = true;
+
+        eA += name;
+
+        for (int i = 0; i < myTransitions.length; i++) {
+
+            if (!myTransitions.get(i).getDestiny().isAccessible()) {
+                eA += myTransitions.get(i).getDestiny().setAccessible();
+
+            }
+
+        }
+
+        return eA + ",";
+
+    }
+
+    public String getName() {
         return name;
     }
 
