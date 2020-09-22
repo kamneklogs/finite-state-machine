@@ -37,7 +37,7 @@ public class FSMController {
 	@FXML
 	private TextField symbolOutput;
 
-	private Machine a;
+	private MealyMachine<String, String> a;
 
 	GenericArray<MealyState<String, String>> mealyS;
 
@@ -179,6 +179,10 @@ public class FSMController {
 
 		}
 		if (counterStates + 1 == mealyS.length && counterSymbols + 1 == symbolsInput.length) {
+
+			mealyS.get(counterStates).link(mealyS.get(Integer.parseInt(indexDestinyState.getText())),
+					currentInSymbolToLink.getText(), currentOutSymbolToLink.getText());
+
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 
 			alert.setTitle("Confirmacion");
@@ -199,7 +203,8 @@ public class FSMController {
 
 			a = new MealyMachine<>(mealyS.get(0), "Mealy Machine", myInputAlphabet, myOutputAlphabet);
 
-			mealyAnalizer = new MealyAnalyzer((MealyMachine<String, String>) a);
+			mealyAnalizer = new MealyAnalyzer(a, mealyS);
+			mealyAnalizer.clearInaccessibleStates();
 			loadAnalyzerWindow();
 		} else {
 
