@@ -6,14 +6,23 @@ public class MealyState<I, O> {
     private String name;
     private GenericArray<MealyTransition<I, O>> myTransitions;
     private int index;
-
+    private boolean isAccessible;
     public MealyState(String name, int alphLength) {
         this.name = name;
         myTransitions = new GenericArray<>(alphLength);
         index = 0;
+        isAccessible=false;
     }
 
-    public String getName() {
+    public boolean isAccessible() {
+		return isAccessible;
+	}
+
+	public void setAccessible(boolean isAccessible) {
+		this.isAccessible = isAccessible;
+	}
+
+	public String getName() {
         return name;
     }
 
