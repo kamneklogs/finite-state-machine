@@ -2,7 +2,6 @@ package model.Analyzers;
 
 import java.util.ArrayList;
 
-import model.GenericArray;
 import model.mealyMachine.MealyMachine;
 import model.mealyMachine.MealyState;
 
@@ -10,58 +9,16 @@ public class MealyAnalyzer {
 
     private MealyMachine<String, String> myMealyMachine;
 
-    private GenericArray<MealyState<String, String>> mealyStatesSet;
+    private ArrayList<MealyState<String, String>> mealyStatesSet;
 
     public MealyAnalyzer(MealyMachine<String, String> myMealyMachine,
-            GenericArray<MealyState<String, String>> mealyStatesSet) {
+            ArrayList<MealyState<String, String>> mealyStatesSet) {
         this.myMealyMachine = myMealyMachine;
         this.mealyStatesSet = mealyStatesSet;
     }
 
-/*     @Override
-    public void clearInaccessibleStates() {
 
-        String[][] adjacencyMatrix = new String[mealyStatesSet.length][myMealyMachine.getInputAlphabet().length];
-
-        for (int i = 0; i < adjacencyMatrix.length; i++) {
-            for (int j = 0; j < adjacencyMatrix[i].length; j++) {
-
-                adjacencyMatrix[i][j] = (String) mealyStatesSet.get(i).getMyTransitions().get(j).getOutput();
-
-            }
-        }
-
-        for (int i = 0; i < adjacencyMatrix.length; i++) {
-            for (int j = 0; j < adjacencyMatrix[i].length; j++) {
-                System.out.print(adjacencyMatrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        MealyState<String, String> temporal = mealyStatesSet.get(0); // q0
-        temporal.setAccessible(true);
-
-        ArrayList<MealyState<String, String>> accessibleStates = new ArrayList<MealyState<String, String>>();
-        accessibleStates.add(temporal);
-
-        for (int i = 1; i < adjacencyMatrix.length; i++) {
-            for (int j = 0; j < adjacencyMatrix[i].length; j++) {
-
-                if (temporal.getMyTransitions().get(j).getDestiny().getName().equals(mealyStatesSet.get(i).getName())) {
-                    mealyStatesSet.get(i).setAccessible(true);
-                    accessibleStates.add(mealyStatesSet.get(i));
-                    temporal = mealyStatesSet.get(i);
-
-                    j = adjacencyMatrix.length;
-                }
-            }
-        }
-
-        for (int i = 0; i < mealyStatesSet.length; i++) {
-            System.out.println("q" + i + mealyStatesSet.get(i).isAccessible() + "");
-        }
-
-    } */
+    
 
     public MealyMachine<String, String> getMyMealyMachine() {
         return myMealyMachine;
@@ -69,5 +26,13 @@ public class MealyAnalyzer {
 
     public void setMyMealyMachine(MealyMachine<String, String> myMealyMachine) {
         this.myMealyMachine = myMealyMachine;
+    }
+
+    public ArrayList<MealyState<String, String>> getMealyStatesSet() {
+        return mealyStatesSet;
+    }
+
+    public void setMealyStatesSet(ArrayList<MealyState<String, String>> mealyStatesSet) {
+        this.mealyStatesSet = mealyStatesSet;
     }
 }

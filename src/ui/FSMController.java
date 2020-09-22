@@ -1,6 +1,9 @@
 package ui;
 
 import java.io.IOException;
+
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -205,18 +208,25 @@ public class FSMController {
 			accessibleStatesOfTheMyMealyMachine = mealyS.get(0).setAccessible();
 			a = new MealyMachine<>(mealyS.get(0), "Mealy Machine", myInputAlphabet, myOutputAlphabet);
 
-			mealyAnalizer = new MealyAnalyzer(a, mealyS);
+			ArrayList<MealyState<String, String>> accessibleMealyStatesLis = new ArrayList<MealyState<String, String>>();
+
+			for (int i = 0; i < mealyS.length; i++) {
+				if (mealyS.get(i).isAccessible()) {
+					accessibleMealyStatesLis.add(mealyS.get(i));
+				}
+			}
+			mealyAnalizer = new MealyAnalyzer(a, accessibleMealyStatesLis);
 
 			loadAnalyzerWindow();
 
 			for (int i = 0; i < mealyS.length; i++) {
 				if (i == mealyS.length - 1) {
-					oldMealyStatesSets.setText(oldMealyStatesSets.getText() + mealyS.get(i).getName()+"}");
+					oldMealyStatesSets.setText(oldMealyStatesSets.getText() + mealyS.get(i).getName() + "}");
 				} else {
 					oldMealyStatesSets.setText(oldMealyStatesSets.getText() + mealyS.get(i).getName() + ", ");
 				}
 			}
-			mealyS = null;
+
 		} else {
 
 			mealyS.get(counterStates).link(mealyS.get(Integer.parseInt(indexDestinyState.getText())),
@@ -259,10 +269,11 @@ public class FSMController {
 	void removeInaccessibleMealyStates(ActionEvent event) {
 
 		accessibleStatesOfTheMyMealyMachine = "{" + accessibleStatesOfTheMyMealyMachine + "}";
-		
-		
-		accessibleStatesOfTheMyMealyMachine= accessibleStatesOfTheMyMealyMachine.substring(0, accessibleStatesOfTheMyMealyMachine.length()-3);
-		accessibleStatesLabel.setText(accessibleStatesLabel.getText() + accessibleStatesOfTheMyMealyMachine + "}" );
+
+		accessibleStatesOfTheMyMealyMachine = accessibleStatesOfTheMyMealyMachine.substring(0,
+				accessibleStatesOfTheMyMealyMachine.length() - 3);
+		accessibleStatesLabel.setText(accessibleStatesLabel.getText() + accessibleStatesOfTheMyMealyMachine + "}");
+
 	}
 
 	@FXML

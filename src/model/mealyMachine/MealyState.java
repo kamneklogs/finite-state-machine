@@ -1,5 +1,7 @@
 package model.mealyMachine;
 
+import java.util.ArrayList;
+
 import model.GenericArray;
 
 public class MealyState<I, O> {
@@ -9,12 +11,15 @@ public class MealyState<I, O> {
     private boolean isAccessible;
     private String eA;
 
+    private ArrayList<String> myOutputs;
+
     public MealyState(String name, int alphLength) {
         this.name = name;
         myTransitions = new GenericArray<>(alphLength);
         index = 0;
         isAccessible = false;
         eA = "";
+        myOutputs = new ArrayList<String>();
     }
 
     public boolean isAccessible() {
@@ -35,8 +40,18 @@ public class MealyState<I, O> {
             }
 
         }
+        outputExtracts();
+        return eA;
 
-        return eA ;
+    }
+
+    private void outputExtracts() {
+
+
+        for (int i = 0; i < myTransitions.length; i++) {
+            myOutputs.add((String)myTransitions.get(i).getOutput());
+        }
+
 
     }
 
