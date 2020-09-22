@@ -211,7 +211,7 @@ public class FSMController {
 
 			for (int i = 0; i < mealyS.length; i++) {
 				if (i == mealyS.length - 1) {
-					oldMealyStatesSets.setText(oldMealyStatesSets.getText() + "}");
+					oldMealyStatesSets.setText(oldMealyStatesSets.getText() + mealyS.get(i).getName()+"}");
 				} else {
 					oldMealyStatesSets.setText(oldMealyStatesSets.getText() + mealyS.get(i).getName() + ", ");
 				}
@@ -259,8 +259,10 @@ public class FSMController {
 	void removeInaccessibleMealyStates(ActionEvent event) {
 
 		accessibleStatesOfTheMyMealyMachine = "{" + accessibleStatesOfTheMyMealyMachine + "}";
-		accessibleStatesLabel.setText(accessibleStatesLabel.getText() + accessibleStatesOfTheMyMealyMachine);
-
+		
+		
+		accessibleStatesOfTheMyMealyMachine= accessibleStatesOfTheMyMealyMachine.substring(0, accessibleStatesOfTheMyMealyMachine.length()-3);
+		accessibleStatesLabel.setText(accessibleStatesLabel.getText() + accessibleStatesOfTheMyMealyMachine + "}" );
 	}
 
 	@FXML

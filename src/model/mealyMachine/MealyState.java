@@ -25,7 +25,7 @@ public class MealyState<I, O> {
 
         isAccessible = true;
 
-        eA += name;
+        eA += name + ", ";
 
         for (int i = 0; i < myTransitions.length; i++) {
 
@@ -36,7 +36,7 @@ public class MealyState<I, O> {
 
         }
 
-        return eA + ", ";
+        return eA ;
 
     }
 
