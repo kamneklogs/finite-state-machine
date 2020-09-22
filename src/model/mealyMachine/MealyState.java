@@ -36,7 +36,7 @@ public class MealyState<I, O> {
 
         }
 
-        return eA + ",";
+        return eA + ", ";
 
     }
 

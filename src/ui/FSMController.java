@@ -132,7 +132,7 @@ public class FSMController {
 			if (out.equals(symbolsInput[symbolsInput.length - 1])) {
 				setoutSymbols += " " + out;
 			} else {
-				setoutSymbols += " " + out + ",";
+				setoutSymbols += " " + out + ", ";
 			}
 
 		}
@@ -202,26 +202,21 @@ public class FSMController {
 			for (int i = 0; i < symbolsOutput.length; i++) {
 				myOutputAlphabet.set(i, symbolsOutput[i]);
 			}
-			String eA = mealyS.get(0).setAccessible();
+			accessibleStatesOfTheMyMealyMachine = mealyS.get(0).setAccessible();
 			a = new MealyMachine<>(mealyS.get(0), "Mealy Machine", myInputAlphabet, myOutputAlphabet);
 
-			/*
-			 * for (int i = 0; i < mealyS.length; i++) {
-			 * System.out.println(mealyS.get(i).getName() + " es accesible? " +
-			 * mealyS.get(i).isAccessible()); }
-			 */
-
-			 System.out.println(eA);
-
-			mealyS = null;
-
 			mealyAnalizer = new MealyAnalyzer(a, mealyS);
-			// mealyAnalizer.clearInaccessibleStates();
 
 			loadAnalyzerWindow();
 
-			resultado.setText("\n" + eA);
-
+			for (int i = 0; i < mealyS.length; i++) {
+				if (i == mealyS.length - 1) {
+					oldMealyStatesSets.setText(oldMealyStatesSets.getText() + "}");
+				} else {
+					oldMealyStatesSets.setText(oldMealyStatesSets.getText() + mealyS.get(i).getName() + ", ");
+				}
+			}
+			mealyS = null;
 		} else {
 
 			mealyS.get(counterStates).link(mealyS.get(Integer.parseInt(indexDestinyState.getText())),
@@ -245,9 +240,12 @@ public class FSMController {
 		}
 
 	}
-	@FXML
-    private Label resultado;
 
+	@FXML
+	private Label accessibleStatesLabel;
+
+	@FXML
+	private Label oldMealyStatesSets;
 
 	public void loadAnalyzerWindow() throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Analyzer.fxml"));
@@ -255,6 +253,14 @@ public class FSMController {
 		Parent mealy = fxmlLoader.load();
 		mainPane.getChildren().clear();
 		mainPane.getChildren().add(mealy);
+	}
+
+	@FXML
+	void removeInaccessibleMealyStates(ActionEvent event) {
+
+		accessibleStatesOfTheMyMealyMachine = "{" + accessibleStatesOfTheMyMealyMachine + "}";
+		accessibleStatesLabel.setText(accessibleStatesLabel.getText() + accessibleStatesOfTheMyMealyMachine);
+
 	}
 
 	@FXML
