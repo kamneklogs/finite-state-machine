@@ -1,7 +1,6 @@
 package ui;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
@@ -10,19 +9,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.GenericArray;
-import model.Analyzers.Analyzer;
 import model.Analyzers.MealyAnalyzer;
-import model.*;
 import model.mealyMachine.MealyMachine;
 import model.mealyMachine.MealyState;
 
