@@ -1,12 +1,12 @@
 package model.mooreMachine;
 
-public class MooreState<O, I> {
+public class MooreState {
 
     private String name;
-    private O output;
-    private MooreTransition<I> myTransition;
+    private String output;
+    private MooreTransition myTransition;
 
-    public MooreState(String name, O output, MooreTransition<I> myTransition) {
+    public MooreState(String name, String output, MooreTransition myTransition) {
         this.name = name;
         this.output = output;
         this.myTransition = myTransition;
@@ -20,19 +20,19 @@ public class MooreState<O, I> {
         this.name = name;
     }
 
-    public O getOutput() {
+    public String getOutput() {
         return output;
     }
 
-    public void setOutput(O output) {
+    public void setOutput(String output) {
         this.output = output;
     }
 
-    public MooreTransition<I> getMyTransition() {
+    public MooreTransition getMyTransition() {
         return myTransition;
     }
 
-    public void setMyTransition(MooreTransition<I> myTransition) {
+    public void setMyTransition(MooreTransition myTransition) {
         this.myTransition = myTransition;
     }
 

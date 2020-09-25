@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,7 +46,7 @@ public class FSMController {
 	private MealyMachine<String, String> a;
 
 	GenericArray<MealyState<String, String>> mealyS;
-	
+
 	private ArrayList<String> allOutputs;
 
 	@FXML
@@ -172,8 +174,8 @@ public class FSMController {
 	private MealyAnalyzer mealyAnalizer, mooreAnalyzer;
 
 	private String accessibleStatesOfTheMyMealyMachine;
-    @FXML
-    private Label partitionOne;
+	@FXML
+	private Label partitionOne;
 
 	@FXML
 	void link(ActionEvent event) throws IOException {
@@ -215,122 +217,39 @@ public class FSMController {
 
 			ArrayList<MealyState<String, String>> accessibleMealyStatesLis = new ArrayList<MealyState<String, String>>();
 
-			
-			
 			for (int i = 0; i < mealyS.length; i++) {
 				if (mealyS.get(i).isAccessible()) {
 					accessibleMealyStatesLis.add(mealyS.get(i));
 				}
 			}
-			
+
 			//
-			allOutputs= new ArrayList<String>();
-			
-			for(int i=0; i<accessibleMealyStatesLis.size();i++) {
-				
-				System.out.println(accessibleMealyStatesLis.get(i).getMyOutputs().toString());
+			allOutputs = new ArrayList<String>();
+
+			for (int i = 0; i < accessibleMealyStatesLis.size(); i++) {
+
+				allOutputs.add(accessibleMealyStatesLis.get(i).outputExtracts());
+
 			}
-			System.out.println(a.getInitialState().getMyOutputsArray()[0]);
-			System.out.println(a.getInitialState().getMyOutputsArray()[1]);
-			
+
+			List<String> withoutDuplicates = allOutputs;
+
+			withoutDuplicates = withoutDuplicates.stream().distinct().collect(Collectors.toList());
+
+			List<MealyState> partition0 = new ArrayList<MealyState>();
+
+			for (int i = 0; i < withoutDuplicates.size(); i++) {
+				for (int j = 0; j < accessibleMealyStatesLis.size(); j++) {
+					if (accessibleMealyStatesLis.get(j).outputExtracts().equals(withoutDuplicates.get(i))) {
+						partition0.add(accessibleMealyStatesLis.get(j));
+						i++;
+						break;
+					}
+				}
+			}
 
 			loadAnalyzerWindow();
-			
 
-			int stateNotEquals=0;
-			boolean salir= true;
-			int empezar=0;
-
-			int j=1;
-
-			int noRevisar=0;
-			partitionOne.setText(partitionOne.getText() +"{" + accessibleMealyStatesLis.get(0).getName());
-
-			while(empezar<accessibleMealyStatesLis.size()) {
-				while(j<accessibleMealyStatesLis.size()) {
-					if(Arrays.equals(accessibleMealyStatesLis.get(empezar).getMyOutputsArray(), 
-							accessibleMealyStatesLis.get(j).getMyOutputsArray())) {
-
-						
-						partitionOne.setText(partitionOne.getText() +
-								", " +accessibleMealyStatesLis.get(j).getName());
-						
-						System.out.println(partitionOne.getText());
-
-						noRevisar=j;
-						//se guarda el estado a partir del cual no son iguales
-						}else {
-							if(salir && j!= noRevisar) {
-								stateNotEquals=j;
-								salir=false;
-								
-						}
-					}
-					
-					j++;
-				}
-				partitionOne.setText(partitionOne.getText() + "}, {" + accessibleMealyStatesLis.get(stateNotEquals).getName() + ",");
-				System.out.println(partitionOne.getText());
-
-				j=stateNotEquals+1;
-				empezar=stateNotEquals;
-				salir =true;
-				
-				if(accessibleMealyStatesLis.get(stateNotEquals).getName().
-						equalsIgnoreCase(accessibleMealyStatesLis.get(accessibleMealyStatesLis.size()-1).getName())) {
-					partitionOne.setText(partitionOne.getText() + "}}");
-					System.out.println(partitionOne.getText());
-
-					break;
-				}
-
-			}
-
-//			while(empezar<accessibleMealyStatesLis.size()) {
-//				partitionOne.setText(partitionOne.getText() + "{"+ accessibleMealyStatesLis.get(empezar).getName());
-//				while(j<accessibleMealyStatesLis.size()) {
-//					if(Arrays.equals(accessibleMealyStatesLis.get(empezar).getMyOutputsArray(), 
-//							accessibleMealyStatesLis.get(j).getMyOutputsArray())) {
-//
-//						
-//						partitionOne.setText(partitionOne.getText() +
-//								", " +accessibleMealyStatesLis.get(j).getName());
-//						
-//						System.out.println(partitionOne.getText());
-//
-//						noRevisar=j;
-//						//se guarda el estado a partir del cual no son iguales
-//						}else {
-//							if(salir && j!= noRevisar) {
-//								stateNotEquals=j;
-//								salir=false;
-//								
-//						}
-//					}
-//					
-//					j++;
-//				}
-//				partitionOne.setText(partitionOne.getText() + "}, ");
-//				System.out.println(partitionOne.getText());
-//
-//				j=stateNotEquals+1;
-//				empezar=stateNotEquals;
-//				salir =true;
-//				
-//				if(accessibleMealyStatesLis.get(stateNotEquals).getName().
-//						equalsIgnoreCase(accessibleMealyStatesLis.get(accessibleMealyStatesLis.size()-1).getName())) {
-//					partitionOne.setText(partitionOne.getText() + "}}");
-//					System.out.println(partitionOne.getText());
-//
-//					break;
-//				}
-//
-//			}
-			
-			
-			
-			
-			
 			mealyAnalizer = new MealyAnalyzer(a, accessibleMealyStatesLis);
 
 			for (int i = 0; i < mealyS.length; i++) {
@@ -341,7 +260,6 @@ public class FSMController {
 				}
 			}
 
-			
 		} else {
 
 			mealyS.get(counterStates).link(mealyS.get(Integer.parseInt(indexDestinyState.getText())),
@@ -392,7 +310,12 @@ public class FSMController {
 	}
 
 	@FXML
-	void mooreopt(ActionEvent event) {
+	void mooreopt(ActionEvent event) throws IOException {
 
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Moore.fxml"));
+		fxmlLoader.setController(this);
+		Parent moore = fxmlLoader.load();
+		mainPane.getChildren().clear();
+		mainPane.getChildren().add(moore);
 	}
 }

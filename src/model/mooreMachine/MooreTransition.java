@@ -1,29 +1,30 @@
 package model.mooreMachine;
 
-public class MooreTransition<T> {
+public class MooreTransition {
 
-    private T tag;
+    private String input;
     private MooreState destiny;
 
-    public MooreTransition(T tag, MooreState destiny) {
-        this.tag = tag;
+    public MooreTransition(String input, MooreState destiny) {
+        this.input = input;
         this.destiny = destiny;
     }
 
-    public T getTag() {
-        return tag;
+    public String getInput() {
+        return input;
+    }
+
+    public void setInput(String input) {
+        this.input = input;
     }
 
     public MooreState getDestiny() {
         return destiny;
     }
 
-    public void setTag(T tag) {
-        this.tag = tag;
-    }
-
     public void setDestiny(MooreState destiny) {
         this.destiny = destiny;
     }
+
 
 }

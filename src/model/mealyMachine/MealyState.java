@@ -10,6 +10,7 @@ public class MealyState<I, O> {
     private int index;
     private boolean isAccessible;
     private String eA;
+    private String myO;
 
     private ArrayList<String> myOutputs;
 
@@ -20,6 +21,7 @@ public class MealyState<I, O> {
         isAccessible = false;
         eA = "";
         myOutputs = new ArrayList<String>();
+        myO = "";
     }
 
     public boolean isAccessible() {
@@ -46,39 +48,28 @@ public class MealyState<I, O> {
 
     }
 
-    private void outputExtracts() {
-
+    public String outputExtracts() {
 
         for (int i = 0; i < myTransitions.length; i++) {
-            myOutputs.add((String)myTransitions.get(i).getOutput());
+            myO += (String) myTransitions.get(i).getOutput();
         }
-
-
+        return myO;
     }
 
-    public ArrayList<String> getMyOutputs() {
-		return myOutputs;
-	}
-    
     public String[] myOutputsArray;
-    
-    
+
     public String[] getMyOutputsArray() {
-		return myOutputsArray;
-	}
-
-	
-
-	private void outputExtractsArray() {
-    	myOutputsArray = new String[myTransitions.length];
-    	for(int i=0; i< myTransitions.length;i++) {
-    		myOutputsArray[i]=(String)myTransitions.get(i).getOutput();
-    	}
+        return myOutputsArray;
     }
 
+    private void outputExtractsArray() {
+        myOutputsArray = new String[myTransitions.length];
+        for (int i = 0; i < myTransitions.length; i++) {
+            myOutputsArray[i] = (String) myTransitions.get(i).getOutput();
+        }
+    }
 
-
-	public String getName() {
+    public String getName() {
         return name;
     }
 
