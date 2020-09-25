@@ -41,6 +41,7 @@ public class MealyState<I, O> {
 
         }
         outputExtracts();
+        outputExtractsArray();
         return eA;
 
     }
@@ -55,7 +56,29 @@ public class MealyState<I, O> {
 
     }
 
-    public String getName() {
+    public ArrayList<String> getMyOutputs() {
+		return myOutputs;
+	}
+    
+    public String[] myOutputsArray;
+    
+    
+    public String[] getMyOutputsArray() {
+		return myOutputsArray;
+	}
+
+	
+
+	private void outputExtractsArray() {
+    	myOutputsArray = new String[myTransitions.length];
+    	for(int i=0; i< myTransitions.length;i++) {
+    		myOutputsArray[i]=(String)myTransitions.get(i).getOutput();
+    	}
+    }
+
+
+
+	public String getName() {
         return name;
     }
 

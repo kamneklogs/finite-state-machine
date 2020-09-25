@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="577.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="116.0" layoutY="37.0" text="Analizador de maquinas de mealy">
          <font>
@@ -15,5 +15,6 @@
       <Label fx:id="accessibleStatesLabel" layoutX="221.0" layoutY="207.0" text="Nueva maquina de estados conexa:  " />
       <Button layoutX="44.0" layoutY="185.0" mnemonicParsing="false" onAction="#removeInaccessibleMealyStates" prefHeight="60.0" prefWidth="145.0" text="Remover estados inaccesibles" textAlignment="CENTER" wrapText="true" />
       <Label fx:id="oldMealyStatesSets" layoutX="96.0" layoutY="124.0" text="Maquina de estados ingresada: {" />
+      <Label fx:id="partitionOne" layoutX="101.0" layoutY="320.0" text="Partición 1:  {" />
    </children>
 </Pane>
