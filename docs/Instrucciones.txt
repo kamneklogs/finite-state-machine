@@ -1,0 +1,26 @@
+Analizador de maquinas de estado finito - Beta Version 0.1
+
+
+Este programa le permitirá ingresar maquinas de estado finito, generar su automata conexo y minimo equivalente.
+
+Instrucciones:
+
+
+1. Ejecutar el programa.
+
+2. Dar clic en el boton Analizar maquina.
+
+3. En el primer cuadro de texto ingresar el numero de estados que contiene su maquina.
+
+4. Ingresar el alfabeto de entrada, caracteres simples o cadenas, separados por una coma (,).
+
+5. Ingresar el alfabeto de salida, caracteres simples o cadenas, separados por una coma (,).
+
+6. Enlazar cada estado con su estado destino y asignar la salida de cada transicion dando clic en el boton enlazar.
+
+7. Dar clic en remover extados inaccesibles para generar la maquina conexa.
+
+8. Dar clic en el boton hacer particion para generar la primer particion del proceso de creacion del minimo equivalente.
+
+9. Dar clic en seguir particionando para seguir particionando.
+
