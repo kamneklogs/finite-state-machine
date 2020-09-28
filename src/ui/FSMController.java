@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -181,8 +182,6 @@ public class FSMController {
 	@FXML
 	void link(ActionEvent event) throws IOException {
 
-	
-
 		if (currentOutSymbolToLink.getText().equals("") || indexDestinyState.getText().equals("")) {
 
 			Alert alert = new Alert(AlertType.WARNING);
@@ -223,7 +222,7 @@ public class FSMController {
 				}
 			}
 
-						allOutputs = new ArrayList<String>();
+			allOutputs = new ArrayList<String>();
 
 			for (int i = 0; i < accessibleMealyStatesLis.size(); i++) {
 
@@ -233,7 +232,6 @@ public class FSMController {
 			System.out.println(a.getInitialState().getMyOutputsArray()[1]);
 
 			loadAnalyzerWindow();
-
 
 			mealyAnalizer = new MealyAnalyzer(a, accessibleMealyStatesLis);
 
@@ -271,75 +269,88 @@ public class FSMController {
 
 	@FXML
 	void doPartition(ActionEvent event) {
-		partitionOne.setText(partitionOne.getText() + "Partición 1: {");
-		int stateNotEquals = 0;
-		boolean salir = true;
-		int empezar = 0;
-		int j = 1;
+		try {
 
-		ArrayList<String> revisadosYYaensubloque = new ArrayList<String>();
-		arrayListdeArraylists = new ArrayList<ArrayList<MealyState<String, String>>>();
+			partitionOne.setText(partitionOne.getText() + "Partición 1: {");
+			int stateNotEquals = 0;
+			boolean salir = true;
+			int empezar = 0;
+			int j = 1;
 
-		while (empezar < accessibleMealyStatesLis.size()) {
-			ArrayList<MealyState<String, String>> m;
-			if (empezar == 0) {
-				partitionOne.setText(partitionOne.getText() + "{" + accessibleMealyStatesLis.get(empezar).getName());
-				System.out.println(partitionOne.getText());
-				revisadosYYaensubloque.add(accessibleMealyStatesLis.get(empezar).getName());
+			ArrayList<String> revisadosYYaensubloque = new ArrayList<String>();
+			arrayListdeArraylists = new ArrayList<ArrayList<MealyState<String, String>>>();
 
-			} else {
-				if (!revisadosYYaensubloque.contains(accessibleMealyStatesLis.get(empezar).getName())) {
+			while (empezar < accessibleMealyStatesLis.size()) {
+				ArrayList<MealyState<String, String>> m;
+				if (empezar == 0) {
 					partitionOne
-							.setText(partitionOne.getText() + ", {" + accessibleMealyStatesLis.get(empezar).getName());
-					System.out.println(partitionOne.getText());
-
+							.setText(partitionOne.getText() + "{" + accessibleMealyStatesLis.get(empezar).getName());
+			//		System.out.println(partitionOne.getText());
 					revisadosYYaensubloque.add(accessibleMealyStatesLis.get(empezar).getName());
 
-				}
-			}
-			m = new ArrayList<MealyState<String, String>>();
-			m.add(accessibleMealyStatesLis.get(empezar));
-			arrayListdeArraylists.add(m);
+				} else {
+					if (!revisadosYYaensubloque.contains(accessibleMealyStatesLis.get(empezar).getName())) {
+						partitionOne.setText(
+								partitionOne.getText() + ", {" + accessibleMealyStatesLis.get(empezar).getName());
+			//			System.out.println(partitionOne.getText());
 
-			while (j < accessibleMealyStatesLis.size()) {
-				if (!revisadosYYaensubloque.contains(accessibleMealyStatesLis.get(j).getName())) {
-					if (Arrays.equals(accessibleMealyStatesLis.get(empezar).getMyOutputsArray(),
-							accessibleMealyStatesLis.get(j).getMyOutputsArray())) {
-						partitionOne.setText(partitionOne.getText() + ", " + accessibleMealyStatesLis.get(j).getName());
-						revisadosYYaensubloque.add(accessibleMealyStatesLis.get(j).getName());
-						System.out.println(partitionOne.getText());
+						revisadosYYaensubloque.add(accessibleMealyStatesLis.get(empezar).getName());
 
-						m.add(accessibleMealyStatesLis.get(j));
-
-					} else {
-						if (salir == true) {
-							stateNotEquals = j;
-							salir = false;
-						}
 					}
 				}
-				j++;
-			}
+				m = new ArrayList<MealyState<String, String>>();
+				m.add(accessibleMealyStatesLis.get(empezar));
+				arrayListdeArraylists.add(m);
 
-			partitionOne.setText(partitionOne.getText() + "}");
-			System.out.println(partitionOne.getText());
+				while (j < accessibleMealyStatesLis.size()) {
+					if (!revisadosYYaensubloque.contains(accessibleMealyStatesLis.get(j).getName())) {
+						if (Arrays.equals(accessibleMealyStatesLis.get(empezar).getMyOutputsArray(),
+								accessibleMealyStatesLis.get(j).getMyOutputsArray())) {
+							partitionOne
+									.setText(partitionOne.getText() + ", " + accessibleMealyStatesLis.get(j).getName());
+							revisadosYYaensubloque.add(accessibleMealyStatesLis.get(j).getName());
+			//				System.out.println(partitionOne.getText());
 
-			empezar = stateNotEquals;
-			j = stateNotEquals + 1;
-			salir = true;
+							m.add(accessibleMealyStatesLis.get(j));
 
-			if (revisadosYYaensubloque.size() == accessibleMealyStatesLis.size()) {
-				if (!revisadosYYaensubloque.contains(accessibleMealyStatesLis.get(stateNotEquals).getName())) {
-					partitionOne.setText(partitionOne.getText() + ",{"
-							+ accessibleMealyStatesLis.get(stateNotEquals).getName() + "}");
-					System.out.println(partitionOne.getText());
-					revisadosYYaensubloque.add(accessibleMealyStatesLis.get(stateNotEquals).getName());
+						} else {
+							if (salir == true) {
+								stateNotEquals = j;
+								salir = false;
+							}
+						}
+					}
+					j++;
+				}
+
+				partitionOne.setText(partitionOne.getText() + "}");
+			//	System.out.println(partitionOne.getText());
+
+				empezar = stateNotEquals;
+				j = stateNotEquals + 1;
+				salir = true;
+
+				if (revisadosYYaensubloque.size() == accessibleMealyStatesLis.size()) {
+					if (!revisadosYYaensubloque.contains(accessibleMealyStatesLis.get(stateNotEquals).getName())) {
+						partitionOne.setText(partitionOne.getText() + ",{"
+								+ accessibleMealyStatesLis.get(stateNotEquals).getName() + "}");
+				//		System.out.println(partitionOne.getText());
+				//		revisadosYYaensubloque.add(accessibleMealyStatesLis.get(stateNotEquals).getName());
+						break;
+					}
 					break;
 				}
-				break;
 			}
+			partitionOne.setText(partitionOne.getText() + "}");
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Error");
+			alert.setHeaderText("Algo salio mal.");
+			alert.setGraphic(new ImageView(this.getClass().getResource("error.png").toString()));
+			alert.setContentText("Tener compasion.");
+
+			alert.showAndWait();
 		}
-		partitionOne.setText(partitionOne.getText() + "}");
 
 	}
 
@@ -348,79 +359,88 @@ public class FSMController {
 
 	@FXML
 	void doAllPartitions(ActionEvent event) {
+		try {
+			int tamanioInicial = arrayListdeArraylists.size();
+			for (int i = 0; i < tamanioInicial; i++) {
+				int bloqueEnElQueVa = 0;
 
-		int tamanioInicial = arrayListdeArraylists.size();
-		for (int i = 0; i < tamanioInicial; i++) {
-			int bloqueEnElQueVa = 0;
+				int empezar = 0;
+				int siguientedeempezar = 1;
+				int transicion = 0;
+				int contador = 0;
+				int verificandobloque = 0;
+				boolean yaExisteUnaNuevaSubparticion = false;
+				for (int j = 0; j < arrayListdeArraylists.get(verificandobloque).size(); j++) {
 
-			int empezar = 0;
-			int siguientedeempezar = 1;
-			int transicion = 0;
-			int contador = 0;
-			int verificandobloque = 0;
-			boolean yaExisteUnaNuevaSubparticion = false;
-			for (int j = 0; j < arrayListdeArraylists.get(verificandobloque).size(); j++) {
+					while (contador < accessibleMealyStatesLis.get(0).getMyTransitions().length) { // recorre las
+																									// transiciones
+						int contadordelK = 0; // nos dice en que particion está
+						int posicionbloque = 0;
+						for (int k = 0; k <= arrayListdeArraylists.size(); k++) { // recorre las particiones en el
+																					// arraylist de arraylist en base al
+																					// destino de las transiciones
 
-				while (contador < accessibleMealyStatesLis.get(0).getMyTransitions().length) { // recorre las
-																								// transiciones
-					int contadordelK = 0; // nos dice en que particion está
-					int posicionbloque = 0;
-					for (int k = 0; k <= arrayListdeArraylists.size(); k++) { // recorre las particiones en el
-																				// arraylist de arraylist en base al
-																				// destino de las transiciones
+							MealyState<String, String> temp1 = arrayListdeArraylists.get(bloqueEnElQueVa).get(empezar)
+									.getMyTransitions().get(transicion).getDestiny();
+							MealyState<String, String> temp2 = arrayListdeArraylists.get(bloqueEnElQueVa)
+									.get(siguientedeempezar).getMyTransitions().get(transicion).getDestiny();
+							contador++;
+							if (arrayListdeArraylists.get(posicionbloque).contains(temp1)
+									&& arrayListdeArraylists.get(posicionbloque).contains(temp2)) {
+								transicion++;
+								yaExisteUnaNuevaSubparticion = false; // true
+								posicionbloque = 0;
+								contadordelK = 0;
+								if (transicion == accessibleMealyStatesLis.get(0).getMyTransitions().length) {
 
-						MealyState<String, String> temp1 = arrayListdeArraylists.get(bloqueEnElQueVa).get(empezar)
-								.getMyTransitions().get(transicion).getDestiny();
-						MealyState<String, String> temp2 = arrayListdeArraylists.get(bloqueEnElQueVa)
-								.get(siguientedeempezar).getMyTransitions().get(transicion).getDestiny();
-						contador++;
-						if (arrayListdeArraylists.get(posicionbloque).contains(temp1)
-								&& arrayListdeArraylists.get(posicionbloque).contains(temp2)) {
-							transicion++;
-							yaExisteUnaNuevaSubparticion = false; // true
-							posicionbloque = 0;
-							contadordelK = 0;
-							if (transicion == accessibleMealyStatesLis.get(0).getMyTransitions().length) {
+									break;
+								}
 
-								break;
+							} else {
+								contadordelK++;
+								posicionbloque++;
+								if (yaExisteUnaNuevaSubparticion == false && contadordelK == tamanioInicial) {
+									arrayListdeArraylists.add(new ArrayList<MealyState<String, String>>());
+									arrayListdeArraylists.get(arrayListdeArraylists.size() - 1).add(temp2);
+									arrayListdeArraylists.get(j).remove(siguientedeempezar);
+									yaExisteUnaNuevaSubparticion = true;
+									break;
+								}
 							}
 
-						} else {
-							contadordelK++;
-							posicionbloque++;
-							if (yaExisteUnaNuevaSubparticion == false && contadordelK == tamanioInicial) {
-								arrayListdeArraylists.add(new ArrayList<MealyState<String, String>>());
-								arrayListdeArraylists.get(arrayListdeArraylists.size() - 1).add(temp2);
-								arrayListdeArraylists.get(j).remove(siguientedeempezar);
-								yaExisteUnaNuevaSubparticion = true;
-								break;
-							}
 						}
+						contador++;
 
 					}
-					contador++;
+					bloqueEnElQueVa++;
+					transicion = 0;
+				//	System.out.println(arrayListdeArraylists.get(i).get(empezar).getName() + " y "
+				//			+ arrayListdeArraylists.get(i).get(siguientedeempezar).getName()
+				//			+ "quedan en el mismo bloque");
+					if (transicion == accessibleMealyStatesLis.get(0).getMyTransitions().length) {
 
+						empezar = siguientedeempezar;
+						siguientedeempezar = siguientedeempezar + 1;
+					} else {
+						siguientedeempezar = siguientedeempezar + 1;
+					}
 				}
-				bloqueEnElQueVa++;
-				transicion = 0;
-				System.out.println(arrayListdeArraylists.get(i).get(empezar).getName() + " y "
-						+ arrayListdeArraylists.get(i).get(siguientedeempezar).getName()
-						+ "quedan en el mismo bloque");
-				if (transicion == accessibleMealyStatesLis.get(0).getMyTransitions().length) {
-
-					
-					empezar = siguientedeempezar;
-					siguientedeempezar = siguientedeempezar + 1;
+				if (siguientedeempezar < arrayListdeArraylists.get(verificandobloque).size()) {
+					verificandobloque = 0;
 				} else {
-					siguientedeempezar = siguientedeempezar + 1;
+					verificandobloque++;
 				}
 			}
-			if (siguientedeempezar < arrayListdeArraylists.get(verificandobloque).size()) {
-				verificandobloque = 0;
-			} else {
-				verificandobloque++;
-			}
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Error");
+			alert.setHeaderText("Algo salio mal.");
+			alert.setGraphic(new ImageView(this.getClass().getResource("error.png").toString()));
+			alert.setContentText("Tener compasion.");
+
+			alert.showAndWait();
 		}
+
 	}
 
 	@FXML

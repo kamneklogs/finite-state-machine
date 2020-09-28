@@ -66,38 +66,38 @@
          </font></Button>
       <Pane fx:id="linkPaneMealy" layoutX="14.0" layoutY="351.0" prefHeight="212.0" prefWidth="734.0" visible="false">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1fec45" height="117.0" layoutX="29.0" layoutY="89.0" stroke="BLACK" strokeType="INSIDE" width="123.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1fec45" height="117.0" layoutX="14.0" layoutY="82.0" stroke="BLACK" strokeType="INSIDE" width="123.0" />
             <Label layoutX="16.0" layoutY="7.0" text="Enlazamiento">
                <font>
                   <Font name="System Bold Italic" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="56.0" layoutY="110.0" text="q">
+            <Label layoutX="41.0" layoutY="103.0" text="q">
                <font>
                   <Font size="51.0" />
                </font>
             </Label>
             <Label fx:id="labelInfoLink" layoutX="14.0" layoutY="22.0" prefHeight="60.0" prefWidth="636.0" text="Enlace el estado qn con el estado qm especificando la entrada y la salida de la transicion y el subindice del estado destino. Recuerde que su conjunto de estados Q={" wrapText="true" />
-            <TextField fx:id="indexCurrentStateToLink" editable="false" layoutX="88.0" layoutY="141.0" prefHeight="36.0" prefWidth="38.0" text="0">
+            <TextField fx:id="indexCurrentStateToLink" editable="false" layoutX="73.0" layoutY="134.0" prefHeight="36.0" prefWidth="38.0" text="0">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </TextField>
-            <Label layoutX="44.0" layoutY="96.0" text="Estado actual" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21ff6051" height="117.0" layoutX="208.0" layoutY="87.0" stroke="BLACK" strokeType="INSIDE" width="497.0" />
-            <Label layoutX="215.0" layoutY="96.0" prefHeight="24.0" prefWidth="76.0" text="Transicion" />
-            <TextField fx:id="currentInSymbolToLink" editable="false" layoutX="296.0" layoutY="138.0" prefHeight="46.0" prefWidth="53.0" />
-            <Label layoutX="227.0" layoutY="138.0" prefHeight="46.0" prefWidth="67.0" text="Caso de estimulo:" wrapText="true" />
-            <Label layoutX="384.0" layoutY="153.0" text="Salida:" />
-            <TextField fx:id="currentOutSymbolToLink" layoutX="440.0" layoutY="138.0" prefHeight="46.0" prefWidth="53.0" />
-            <Label layoutX="560.0" layoutY="118.0" text="Estado destino:" />
-            <TextField fx:id="indexDestinyState" layoutX="610.0" layoutY="149.0" prefHeight="39.0" prefWidth="38.0" />
-            <Label layoutX="578.0" layoutY="118.0" prefHeight="61.0" prefWidth="32.0" text="q">
+            <Label layoutX="29.0" layoutY="89.0" text="Estado actual" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21ff6051" height="117.0" layoutX="143.0" layoutY="82.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
+            <Label layoutX="150.0" layoutY="91.0" prefHeight="24.0" prefWidth="76.0" text="Transicion" />
+            <TextField fx:id="currentInSymbolToLink" editable="false" layoutX="231.0" layoutY="133.0" prefHeight="46.0" prefWidth="53.0" />
+            <Label layoutX="162.0" layoutY="133.0" prefHeight="46.0" prefWidth="67.0" text="Caso de estimulo:" wrapText="true" />
+            <Label layoutX="298.0" layoutY="148.0" text="Salida:" />
+            <TextField fx:id="currentOutSymbolToLink" layoutX="346.0" layoutY="133.0" prefHeight="46.0" prefWidth="53.0" />
+            <Label layoutX="436.0" layoutY="113.0" text="Estado destino:" />
+            <TextField fx:id="indexDestinyState" layoutX="486.0" layoutY="144.0" prefHeight="39.0" prefWidth="38.0" />
+            <Label layoutX="454.0" layoutY="113.0" prefHeight="61.0" prefWidth="32.0" text="q">
                <font>
                   <Font size="51.0" />
                </font>
             </Label>
-            <Button layoutX="399.0" layoutY="221.0" mnemonicParsing="false" onAction="#link" text="Enlazar">
+            <Button layoutX="592.0" layoutY="121.0" mnemonicParsing="false" onAction="#link" text="Enlazar">
                <font>
                   <Font name="System Bold Italic" size="21.0" />
                </font>

@@ -27,7 +27,9 @@ public class MealyState<I, O> {
     }
 
     /**
-     * Links all states from the initial state
+     * Links all states from the initial state 
+     * pre: There is a set of states with n
+     * transitions pos: Linked states from the initial state
      * 
      * @return String with the name of the linked states
      */
@@ -52,7 +54,9 @@ public class MealyState<I, O> {
     }
 
     /**
-     * 
+     * Extracts set of name transition's output
+     * pre: There is a set of n transitions
+     * pos: Set myOutput constains all names of outputs
      */
     private void outputExtracts() {
 
@@ -72,6 +76,11 @@ public class MealyState<I, O> {
         return myOutputsArray;
     }
 
+    /**
+     * Generates  states from the initial state 
+     * pre: There is a set of states with n
+     * transitions pos: Linked states from the initial state
+     */
     private void outputExtractsArray() {
         myOutputsArray = new String[myTransitions.length];
         for (int i = 0; i < myTransitions.length; i++) {
