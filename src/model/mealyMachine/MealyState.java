@@ -10,7 +10,6 @@ public class MealyState<I, O> {
     private int index;
     private boolean isAccessible;
     private String eA;
-    private String myO;
 
     private ArrayList<String> myOutputs;
 
@@ -21,13 +20,17 @@ public class MealyState<I, O> {
         isAccessible = false;
         eA = "";
         myOutputs = new ArrayList<String>();
-        myO = "";
     }
 
     public boolean isAccessible() {
         return isAccessible;
     }
 
+    /**
+     * Links all states from the initial state
+     * 
+     * @return String with the name of the linked states
+     */
     public String setAccessible() {
 
         isAccessible = true;
@@ -48,12 +51,19 @@ public class MealyState<I, O> {
 
     }
 
-    public String outputExtracts() {
+    /**
+     * 
+     */
+    private void outputExtracts() {
 
         for (int i = 0; i < myTransitions.length; i++) {
-            myO += (String) myTransitions.get(i).getOutput();
+            myOutputs.add((String) myTransitions.get(i).getOutput());
         }
-        return myO;
+
+    }
+
+    public ArrayList<String> getMyOutputs() {
+        return myOutputs;
     }
 
     public String[] myOutputsArray;

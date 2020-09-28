@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -177,11 +175,13 @@ public class FSMController {
 	@FXML
 	private Label partitionOne;
 
+	ArrayList<ArrayList<MealyState<String, String>>> arrayListdeArraylists;
+	ArrayList<MealyState<String, String>> accessibleMealyStatesLis;
+
 	@FXML
 	void link(ActionEvent event) throws IOException {
 
-		// desarrollar try catch para que ingrese valores permitidos existentes en los
-		// conjuntos de salidas y estados
+	
 
 		if (currentOutSymbolToLink.getText().equals("") || indexDestinyState.getText().equals("")) {
 
@@ -215,7 +215,7 @@ public class FSMController {
 			accessibleStatesOfTheMyMealyMachine = mealyS.get(0).setAccessible();
 			a = new MealyMachine<>(mealyS.get(0), "Mealy Machine", myInputAlphabet, myOutputAlphabet);
 
-			ArrayList<MealyState<String, String>> accessibleMealyStatesLis = new ArrayList<MealyState<String, String>>();
+			accessibleMealyStatesLis = new ArrayList<MealyState<String, String>>();
 
 			for (int i = 0; i < mealyS.length; i++) {
 				if (mealyS.get(i).isAccessible()) {
@@ -223,32 +223,17 @@ public class FSMController {
 				}
 			}
 
-			//
-			allOutputs = new ArrayList<String>();
+						allOutputs = new ArrayList<String>();
 
 			for (int i = 0; i < accessibleMealyStatesLis.size(); i++) {
 
-				allOutputs.add(accessibleMealyStatesLis.get(i).outputExtracts());
-
+				System.out.println(accessibleMealyStatesLis.get(i).getMyOutputs().toString());
 			}
-
-			List<String> withoutDuplicates = allOutputs;
-
-			withoutDuplicates = withoutDuplicates.stream().distinct().collect(Collectors.toList());
-
-			List<MealyState> partition0 = new ArrayList<MealyState>();
-
-			for (int i = 0; i < withoutDuplicates.size(); i++) {
-				for (int j = 0; j < accessibleMealyStatesLis.size(); j++) {
-					if (accessibleMealyStatesLis.get(j).outputExtracts().equals(withoutDuplicates.get(i))) {
-						partition0.add(accessibleMealyStatesLis.get(j));
-						i++;
-						break;
-					}
-				}
-			}
+			System.out.println(a.getInitialState().getMyOutputsArray()[0]);
+			System.out.println(a.getInitialState().getMyOutputsArray()[1]);
 
 			loadAnalyzerWindow();
+
 
 			mealyAnalizer = new MealyAnalyzer(a, accessibleMealyStatesLis);
 
@@ -285,6 +270,160 @@ public class FSMController {
 	}
 
 	@FXML
+	void doPartition(ActionEvent event) {
+		partitionOne.setText(partitionOne.getText() + "Partición 1: {");
+		int stateNotEquals = 0;
+		boolean salir = true;
+		int empezar = 0;
+		int j = 1;
+
+		ArrayList<String> revisadosYYaensubloque = new ArrayList<String>();
+		arrayListdeArraylists = new ArrayList<ArrayList<MealyState<String, String>>>();
+
+		while (empezar < accessibleMealyStatesLis.size()) {
+			ArrayList<MealyState<String, String>> m;
+			if (empezar == 0) {
+				partitionOne.setText(partitionOne.getText() + "{" + accessibleMealyStatesLis.get(empezar).getName());
+				System.out.println(partitionOne.getText());
+				revisadosYYaensubloque.add(accessibleMealyStatesLis.get(empezar).getName());
+
+			} else {
+				if (!revisadosYYaensubloque.contains(accessibleMealyStatesLis.get(empezar).getName())) {
+					partitionOne
+							.setText(partitionOne.getText() + ", {" + accessibleMealyStatesLis.get(empezar).getName());
+					System.out.println(partitionOne.getText());
+
+					revisadosYYaensubloque.add(accessibleMealyStatesLis.get(empezar).getName());
+
+				}
+			}
+			m = new ArrayList<MealyState<String, String>>();
+			m.add(accessibleMealyStatesLis.get(empezar));
+			arrayListdeArraylists.add(m);
+
+			while (j < accessibleMealyStatesLis.size()) {
+				if (!revisadosYYaensubloque.contains(accessibleMealyStatesLis.get(j).getName())) {
+					if (Arrays.equals(accessibleMealyStatesLis.get(empezar).getMyOutputsArray(),
+							accessibleMealyStatesLis.get(j).getMyOutputsArray())) {
+						partitionOne.setText(partitionOne.getText() + ", " + accessibleMealyStatesLis.get(j).getName());
+						revisadosYYaensubloque.add(accessibleMealyStatesLis.get(j).getName());
+						System.out.println(partitionOne.getText());
+
+						m.add(accessibleMealyStatesLis.get(j));
+
+					} else {
+						if (salir == true) {
+							stateNotEquals = j;
+							salir = false;
+						}
+					}
+				}
+				j++;
+			}
+
+			partitionOne.setText(partitionOne.getText() + "}");
+			System.out.println(partitionOne.getText());
+
+			empezar = stateNotEquals;
+			j = stateNotEquals + 1;
+			salir = true;
+
+			if (revisadosYYaensubloque.size() == accessibleMealyStatesLis.size()) {
+				if (!revisadosYYaensubloque.contains(accessibleMealyStatesLis.get(stateNotEquals).getName())) {
+					partitionOne.setText(partitionOne.getText() + ",{"
+							+ accessibleMealyStatesLis.get(stateNotEquals).getName() + "}");
+					System.out.println(partitionOne.getText());
+					revisadosYYaensubloque.add(accessibleMealyStatesLis.get(stateNotEquals).getName());
+					break;
+				}
+				break;
+			}
+		}
+		partitionOne.setText(partitionOne.getText() + "}");
+
+	}
+
+	@FXML
+	private Pane painAnalyzer;
+
+	@FXML
+	void doAllPartitions(ActionEvent event) {
+
+		int tamanioInicial = arrayListdeArraylists.size();
+		for (int i = 0; i < tamanioInicial; i++) {
+			int bloqueEnElQueVa = 0;
+
+			int empezar = 0;
+			int siguientedeempezar = 1;
+			int transicion = 0;
+			int contador = 0;
+			int verificandobloque = 0;
+			boolean yaExisteUnaNuevaSubparticion = false;
+			for (int j = 0; j < arrayListdeArraylists.get(verificandobloque).size(); j++) {
+
+				while (contador < accessibleMealyStatesLis.get(0).getMyTransitions().length) { // recorre las
+																								// transiciones
+					int contadordelK = 0; // nos dice en que particion está
+					int posicionbloque = 0;
+					for (int k = 0; k <= arrayListdeArraylists.size(); k++) { // recorre las particiones en el
+																				// arraylist de arraylist en base al
+																				// destino de las transiciones
+
+						MealyState<String, String> temp1 = arrayListdeArraylists.get(bloqueEnElQueVa).get(empezar)
+								.getMyTransitions().get(transicion).getDestiny();
+						MealyState<String, String> temp2 = arrayListdeArraylists.get(bloqueEnElQueVa)
+								.get(siguientedeempezar).getMyTransitions().get(transicion).getDestiny();
+						contador++;
+						if (arrayListdeArraylists.get(posicionbloque).contains(temp1)
+								&& arrayListdeArraylists.get(posicionbloque).contains(temp2)) {
+							transicion++;
+							yaExisteUnaNuevaSubparticion = false; // true
+							posicionbloque = 0;
+							contadordelK = 0;
+							if (transicion == accessibleMealyStatesLis.get(0).getMyTransitions().length) {
+
+								break;
+							}
+
+						} else {
+							contadordelK++;
+							posicionbloque++;
+							if (yaExisteUnaNuevaSubparticion == false && contadordelK == tamanioInicial) {
+								arrayListdeArraylists.add(new ArrayList<MealyState<String, String>>());
+								arrayListdeArraylists.get(arrayListdeArraylists.size() - 1).add(temp2);
+								arrayListdeArraylists.get(j).remove(siguientedeempezar);
+								yaExisteUnaNuevaSubparticion = true;
+								break;
+							}
+						}
+
+					}
+					contador++;
+
+				}
+				bloqueEnElQueVa++;
+				transicion = 0;
+				System.out.println(arrayListdeArraylists.get(i).get(empezar).getName() + " y "
+						+ arrayListdeArraylists.get(i).get(siguientedeempezar).getName()
+						+ "quedan en el mismo bloque");
+				if (transicion == accessibleMealyStatesLis.get(0).getMyTransitions().length) {
+
+					
+					empezar = siguientedeempezar;
+					siguientedeempezar = siguientedeempezar + 1;
+				} else {
+					siguientedeempezar = siguientedeempezar + 1;
+				}
+			}
+			if (siguientedeempezar < arrayListdeArraylists.get(verificandobloque).size()) {
+				verificandobloque = 0;
+			} else {
+				verificandobloque++;
+			}
+		}
+	}
+
+	@FXML
 	private Label accessibleStatesLabel;
 
 	@FXML
@@ -310,12 +449,7 @@ public class FSMController {
 	}
 
 	@FXML
-	void mooreopt(ActionEvent event) throws IOException {
+	void mooreopt(ActionEvent event) {
 
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Moore.fxml"));
-		fxmlLoader.setController(this);
-		Parent moore = fxmlLoader.load();
-		mainPane.getChildren().clear();
-		mainPane.getChildren().add(moore);
 	}
 }

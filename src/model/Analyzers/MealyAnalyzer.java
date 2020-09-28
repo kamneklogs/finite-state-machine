@@ -17,9 +17,6 @@ public class MealyAnalyzer {
         this.mealyStatesSet = mealyStatesSet;
     }
 
-
-    
-
     public MealyMachine<String, String> getMyMealyMachine() {
         return myMealyMachine;
     }
@@ -35,4 +32,5 @@ public class MealyAnalyzer {
     public void setMealyStatesSet(ArrayList<MealyState<String, String>> mealyStatesSet) {
         this.mealyStatesSet = mealyStatesSet;
     }
+
 }
